@@ -2,17 +2,19 @@ import PropTypes from "prop-types";
 
 export default function Card({ title, poster, url, description }) {
   return (
-    <div className="bg-slate-200 rounded shadow-md flex flex-col overflow-hidden cursor-pointer">
-      <img
-        src={poster}
-        className="w-full aspect-video bg-slate-400"
-        alt={title}
-      />
+    <div className="group flex cursor-pointer flex-col overflow-hidden rounded bg-slate-100 shadow-md transition duration-300 hover:bg-slate-200">
+      <div className="aspect-video w-full overflow-hidden">
+        <img
+          src={poster || "/images/placeholder.webp"}
+          className="h-full w-full bg-slate-400 object-cover transition duration-300 group-hover:scale-125"
+          alt={title}
+        />
+      </div>
 
-      <div className="px-4 flex gap-2 flex-col py-2">
-        <h2 className="font-semibold text-xl">{title}</h2>
+      <div className="flex flex-col gap-2 px-4 py-2">
+        <h2 className="text-xl font-semibold">{title}</h2>
         <a
-          className="text-cyan-700 text-sm underline line-clamp-1 break-words"
+          className="line-clamp-1 break-words text-sm text-cyan-700 underline"
           href={url}
         >
           {url}
@@ -25,7 +27,7 @@ export default function Card({ title, poster, url, description }) {
 
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  poster: PropTypes.string,
 };
