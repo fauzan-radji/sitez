@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import Card from "./components/Card";
-import CardSkeleton from "./skeletons/Card";
+import { Card } from "./Components";
+import { Card as CardSkeleton } from "./Skeletons";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,18 +11,21 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-[100dvh] text-slate-950">
+    <div className="min-h-[100dvh] bg-slate-50 text-slate-950">
       <header className="container mx-auto flex flex-col justify-between gap-2 p-4 md:flex-row">
         <h1 className="text-center text-3xl font-semibold text-slate-900">
           Sitez
         </h1>
-        <form className="flex items-center rounded bg-slate-200 ring-slate-600 transition focus-within:ring-2">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="flex items-center rounded bg-slate-200 ring-slate-400 transition duration-300 focus-within:ring-2"
+        >
           <input
             type="text"
             className="flex-1 bg-transparent px-4 py-2 text-inherit outline-none placeholder:text-slate-400"
             placeholder="Search"
           />
-          <button className="text-inherit">
+          <button className="text-inherit" tabIndex={-1}>
             <MagnifyingGlassIcon className="me-4 h-4 w-4 text-inherit" />
           </button>
         </form>

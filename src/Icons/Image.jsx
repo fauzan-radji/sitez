@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 
-console.log(PropTypes);
-
-export function Image({ className }) {
+export default function Image({ className }) {
   return (
     <svg
       className={className}

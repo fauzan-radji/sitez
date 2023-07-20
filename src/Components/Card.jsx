@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function Card({ title, poster, url, description }) {
   return (
-    <div className="group flex cursor-pointer flex-col overflow-hidden rounded bg-slate-100 shadow-md transition duration-300 hover:bg-slate-200">
+    <div className="group flex cursor-pointer flex-col overflow-hidden rounded bg-slate-100 shadow-md ring-slate-400 transition duration-300 focus-within:ring-2 hover:ring-2">
       <div className="aspect-video w-full overflow-hidden">
         <img
           src={poster || "/images/placeholder.webp"}
@@ -14,7 +14,7 @@ export default function Card({ title, poster, url, description }) {
       <div className="flex flex-col gap-2 px-4 py-2">
         <h2 className="text-xl font-semibold">{title}</h2>
         <a
-          className="line-clamp-1 break-words text-sm text-cyan-700 underline"
+          className="line-clamp-1 break-words text-sm text-cyan-700 underline outline-none"
           href={url}
         >
           {url}
