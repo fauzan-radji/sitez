@@ -1,0 +1,41 @@
+{
+  "statusCode": 200,
+  "data": {
+    "sites": [
+      {
+        "id": 1,
+        "title": "Storyset",
+        "url": "https://storyset.com/",
+        "poster": "/images/storyset.png",
+        "description": "Awesome free customizable illustrations for your next project.",
+        "tags": [1, 2, 3]
+      },
+      {
+        "id": 2,
+        "title": "Undraw",
+        "url": "https://undraw.co/illustrations",
+        "poster": "/images/undraw.png",
+        "description": "Open-source illustrations for every project you can imagine and create.",
+        "tags": [1, 2, 3]
+      }
+    ],
+    "tags": [
+      {
+        "id": 1,
+        "name": "illustrations"
+      },
+      {
+        "id": 2,
+        "name": "design"
+      },
+      {
+        "id": 3,
+        "name": "free"
+      },
+      {
+        "id": 4,
+        "name": "icons"
+      }
+    ]
+  }
+}

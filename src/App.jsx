@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Card } from "./Components";
 import { Card as CardSkeleton } from "./Skeletons";
+import { useFetch } from "./hooks";
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
+  // TODO: Error handling
+  const { isLoading, data /*, error */ } = useFetch("/sitez.json");
 
   return (
     <div className="min-h-[100dvh] bg-slate-50 text-slate-950">
@@ -30,21 +27,18 @@ export default function App() {
           </button>
         </form>
       </header>
-      <main className="container mx-auto grid grid-cols-2 gap-4 p-4 md:grid-cols-4 lg:grid-cols-6">
-        {Array.from({ length: 6 }).map((_, i) =>
-          isLoading ? (
-            <CardSkeleton key={i} />
-          ) : (
-            <Card
-              key={i}
-              title={"Some site"}
-              url={"https://some.site"}
-              description={
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit non molestias nesciunt vitae."
-              }
-            />
-          )
-        )}
+      <main className="container mx-auto grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)
+          : data.sites.map((site) => (
+              <Card
+                key={site.id}
+                title={site.title}
+                url={site.url}
+                poster={site.poster}
+                description={site.description}
+              />
+            ))}
       </main>
     </div>
   );
