@@ -5,7 +5,7 @@ import { useFetch } from "./hooks";
 
 export default function App() {
   // TODO: Error handling
-  const { isLoading, data /*, error */ } = useFetch("/sitez.json");
+  const { isLoading, data /*, error */ } = useFetch("sitez.json");
 
   return (
     <div className="min-h-[100dvh] bg-slate-50 text-slate-950">
