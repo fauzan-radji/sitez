@@ -2,10 +2,25 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Card } from "./Components";
 import { Card as CardSkeleton } from "./Skeletons";
 import { useFetch } from "./hooks";
+import { search } from "./utils";
+import { useEffect, useRef, useState } from "react";
 
 export default function App() {
   // TODO: Error handling
   const { isLoading, data /*, error */ } = useFetch("sitez.json");
+  const [sites, setSites] = useState(data?.sites);
+  useEffect(() => {
+    setSites(data?.sites);
+  }, [data?.sites]);
+
+  const searchInput = useRef(null);
+  const handleSearch = (e) => {
+    const result = search(
+      e.target.value,
+      data.sites.map((site) => ({ ...site, keyword: site.title }))
+    );
+    setSites(result);
+  };
 
   return (
     <div className="min-h-[100dvh] bg-slate-50 text-slate-950">
@@ -18,6 +33,8 @@ export default function App() {
           className="flex items-center rounded bg-slate-200 ring-slate-400 transition duration-300 focus-within:ring-2"
         >
           <input
+            ref={searchInput}
+            onChange={handleSearch}
             type="text"
             className="flex-1 bg-transparent px-4 py-2 text-inherit outline-none placeholder:text-slate-400"
             placeholder="Search"
@@ -28,9 +45,9 @@ export default function App() {
         </form>
       </header>
       <main className="container mx-auto grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
-        {isLoading
+        {isLoading || !sites
           ? Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)
-          : data.sites.map((site) => (
+          : sites.map((site) => (
               <Card
                 key={site.id}
                 title={site.title}

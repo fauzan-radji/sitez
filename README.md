@@ -9,5 +9,6 @@ A website to gather useful sites from the internet.\
 2. Clone your forked repository
 3. Create a new branch
 4. Add your site to the [sitez.json](public/sitez.json) file
-5. Commit and push your changes
-6. Create a pull request
+5. Add your site's preview image to the [public/images](public/images) folder
+6. Commit and push your changes
+7. Create a pull request
