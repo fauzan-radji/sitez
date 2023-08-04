@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import Image from "next/image";
 
 export default function Card({ title, poster, url, description }) {
   const openNewPage = (url) => {
@@ -11,7 +11,9 @@ export default function Card({ title, poster, url, description }) {
       className="group flex cursor-pointer flex-col overflow-hidden rounded bg-slate-100 shadow-md ring-slate-400 transition duration-300 focus-within:ring-2 hover:ring-2"
     >
       <div className="aspect-video w-full overflow-hidden">
-        <img
+        <Image
+          width={160}
+          height={90}
           src={poster || "/images/placeholder.webp"}
           className="h-full w-full bg-slate-400 object-cover transition duration-300 group-hover:scale-105"
           alt={title}
@@ -33,10 +35,3 @@ export default function Card({ title, poster, url, description }) {
     </div>
   );
 }
-
-Card.propTypes = {
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  poster: PropTypes.string,
-};

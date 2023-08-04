@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 export default function Image({ className }) {
   return (
     <svg
@@ -13,7 +11,3 @@ export default function Image({ className }) {
     </svg>
   );
 }
-
-Image.propTypes = {
-  className: PropTypes.string.isRequired,
-};
