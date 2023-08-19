@@ -1,10 +1,10 @@
-import { Image } from "../Icons";
+import { Image as ImagePlaceholder } from "../icons";
 
 export default function Card() {
   return (
     <div className="flex animate-pulse flex-col overflow-hidden rounded bg-slate-950/20 shadow-md">
       <div className="grid aspect-video w-full place-content-center bg-slate-950/20">
-        <Image className="h-10 w-10 text-slate-950/20" />
+        <ImagePlaceholder className="h-10 w-10 text-slate-950/20" />
       </div>
 
       <div className="flex flex-col gap-2 px-4 py-2">
