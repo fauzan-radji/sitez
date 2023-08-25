@@ -2,6 +2,19 @@ import { Card, Modal } from "@/src/components";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Site } from "@/src/models";
+import { redirect } from "next/navigation";
+
+async function saveSite(formData: FormData) {
+  "use server";
+
+  const title = formData.get("title") as string;
+  const url = formData.get("url") as string;
+  const description = formData.get("description") as string;
+
+  Site.create({ title, url, description });
+
+  redirect("/");
+}
 
 export default function Home() {
   const sites = Site.all();
@@ -46,7 +59,7 @@ export default function Home() {
       </main>
 
       <Modal id="create-site" title="Add New Site">
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" action={saveSite}>
           <div className="flex flex-col gap-1">
             <label htmlFor="title">Title</label>
             <input

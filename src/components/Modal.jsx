@@ -2,7 +2,10 @@ export default function Modal({ id, title, children }) {
   return (
     <>
       <input type="checkbox" id={id} className="peer hidden" />
-      <div className="pointer-events-none fixed inset-0 z-50 flex -translate-y-4 items-center justify-center bg-gray-900 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out peer-checked:pointer-events-auto peer-checked:translate-y-0 peer-checked:opacity-100">
+      <label
+        htmlFor={id}
+        className="pointer-events-none fixed inset-0 z-50 flex -translate-y-4 items-center justify-center bg-gray-900 bg-opacity-50 opacity-0 transition-all duration-300 ease-in-out peer-checked:pointer-events-auto peer-checked:translate-y-0 peer-checked:opacity-100"
+      >
         <div className="flex w-full max-w-md flex-col gap-4 rounded-lg bg-white p-4">
           <div className="flex justify-between">
             <h2 className="text-xl font-bold">{title}</h2>
@@ -28,7 +31,7 @@ export default function Modal({ id, title, children }) {
 
           <div>{children}</div>
         </div>
-      </div>
+      </label>
     </>
   );
 }
