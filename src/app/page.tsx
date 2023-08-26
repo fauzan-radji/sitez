@@ -1,8 +1,10 @@
-import { Card, Modal } from "@/src/components";
+import { Card, Input, Modal, ModalTrigger } from "@/src/components";
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Site } from "@/src/models";
+import path from "path";
 import { redirect } from "next/navigation";
+import { writeFile } from "fs/promises";
 
 async function saveSite(formData: FormData) {
   "use server";
@@ -10,10 +12,28 @@ async function saveSite(formData: FormData) {
   const title = formData.get("title") as string;
   const url = formData.get("url") as string;
   const description = formData.get("description") as string;
+  const poster = formData.get("poster") as File;
 
-  Site.create({ title, url, description });
+  if (!title || !url || !description || !poster) {
+    return redirect("/");
+  }
 
-  redirect("/");
+  const buffer = Buffer.from(await poster.arrayBuffer());
+  const filename = `${Date.now()}_${poster.name
+    .toLowerCase()
+    .replaceAll(" ", "_")}`;
+
+  try {
+    await writeFile(
+      path.join(process.cwd(), "public/images/" + filename),
+      buffer
+    );
+    Site.create({ title, url, description, poster: `/images/${filename}` });
+  } catch (error) {
+    console.log("Error occured ", error);
+  } finally {
+    redirect("/");
+  }
 }
 
 export default function Home() {
@@ -38,12 +58,9 @@ export default function Home() {
       </header>
 
       <div className="container mx-auto flex items-center justify-center px-4 md:justify-start">
-        <label
-          htmlFor="create-site"
-          className="flex cursor-pointer items-center justify-center gap-2 rounded-md bg-cyan-900 px-4 py-2 text-sm text-slate-300"
-        >
-          <span className="text-xl leading-none">+</span> New Site
-        </label>
+        <ModalTrigger id="create-site">
+          <PlusIcon className="h-4 w-4" /> New Site
+        </ModalTrigger>
       </div>
 
       <main className="container mx-auto grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
@@ -60,44 +77,29 @@ export default function Home() {
 
       <Modal id="create-site" title="Add New Site">
         <form className="flex flex-col gap-4" action={saveSite}>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              className="rounded bg-slate-200 px-4 py-2 text-inherit outline-none ring-slate-400 transition duration-300 placeholder:text-slate-400 focus:ring-2"
-              placeholder="Title"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="url">URL</label>
-            <input
-              type="url"
-              name="url"
-              id="url"
-              className="rounded bg-slate-200 px-4 py-2 text-inherit outline-none ring-slate-400 transition duration-300 placeholder:text-slate-400 focus:ring-2"
-              placeholder="URL"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="title">Description</label>
-            <textarea
-              name="description"
-              id="description"
-              rows={3}
-              className="resize-none rounded bg-slate-200 px-4 py-2 text-inherit outline-none ring-slate-400 transition duration-300 placeholder:text-slate-400 focus:ring-2"
-              placeholder="Description"
-            ></textarea>
-          </div>
+          <Input id="title" label="Title" type="text" name="title" />
+          <Input id="url" label="URL" type="url" name="url" />
+          <Input
+            id="poster"
+            label="Poster"
+            type="file"
+            name="poster"
+            accept="image/*"
+          />
+          <Input
+            id="description"
+            label="Description"
+            type="textarea"
+            name="description"
+          />
 
           <div className="flex gap-4">
-            <label
-              htmlFor="create-site"
-              className="flex-1 cursor-pointer rounded bg-slate-600 px-4 py-2 text-center text-sm text-white hover:bg-slate-700"
+            <ModalTrigger
+              id="create-site"
+              className="flex-1 rounded bg-slate-600 hover:bg-slate-700"
             >
               Close
-            </label>
+            </ModalTrigger>
 
             <button
               type="submit"
